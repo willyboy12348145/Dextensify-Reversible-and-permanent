@@ -164,6 +164,8 @@
         },
       };
 
+      let frames;
+
       async function check_url(url) {
         let controller = new AbortController();
         let timeout = setTimeout(() => controller.abort(), 500);
@@ -219,7 +221,13 @@
       function button_handler(extension) {
         let cancel = !confirm("After hitting OK, there will be a 5 second delay until the extension starts being frozen. Switch to another tab immediately to prevent the entire device from locking up.");
         if (cancel) return;
-        
+
+        frames = document.getElementById("framerate-value").value;
+        if (frames == undefined || frames == '') {
+          console.log('Frames defaulting to 50!');
+          frames = 50;
+        }
+
         setTimeout(() => {
           create_iframes(extension);
         }, 5000);
@@ -230,17 +238,13 @@
         let iterations = 5;
         let public_url = extension.url;
         
+        
         while (true) {
           let iframe = document.createElement("iframe");
           document.body.append(iframe);
           iframes.push(iframe);
 
           //let subframe_count = Math.max(2, 200 - iterations);
-          var frames = document.getElementById("framerate-value").value;
-          if (frames == undefined || frames == '') {
-            alert('Invalid selection for frames! Defaulting to 50!');
-            frames = 50;
-          }
 
           for (let i=0; i<frames; i++) {
             let subframe = document.createElement("iframe");
@@ -275,44 +279,25 @@
         <li>You may also need to reopen this page every once in a while to prevent an unavoidable memory leak from crashing the system.</li>
       </ol>
       <p>During this process, your Chromebook may hang momentarily. This is normal, and it should resolve itself after a few seconds.</p>
-      <div id="buttons_container">
-        <p><i>Detecting extensions...</i></p>
-      </div>
+      <h2>Options</h2>
       <div id="options-container">
-        <label for="frames">Framerate:</label>
+        <label for="frames"><h3>Framerate:</h3></label>
         <p>Framerate at which dextensify freezes extentions. The default is 50, but that can be hard to deal with.
           I recomend using a number less then that to make it easier to freeze your extention and to prevent crashing.
         </p><br>
         <input type="number" id="framerate-value" name="frames" required minlength="1" maxlength="2" size="10" />
       </div>
+      <br> <br>
+      <div id="buttons_container">
+        <p><i>Detecting extensions...</i></p>
+      </div>
+      
       <br>
       <hr>
-      <details>
-        <summary style="margin-bottom: 8px;">
-          Made by <a href="https://ading.dev" target="_blank">ading2210</a>. This file is licensed under the MIT license.
-        </summary>
-        <pre>MIT License
-Copyright (c) 2023 ading2210
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</pre>
-        <p style="font-size: 13px; text-align: right;"><i>Version 1.1.2</i></p>
-      </details>
+          Original code by <a href="https://ading.dev" target="_blank">ading2210</a>.<br>
+          Updated and improved by <a href="https://github.com/STPv22" target="_blank">STPv22</a> <br>
+          <a href="https://github.com/STPv22/Dexterity" target="_blank">Submit an issue</a>
+        <p style="font-size: 13px; text-align: right;"><i>MIT Licence Version 1.1.2</i></p>
     </div>
   </body>
 </html>
