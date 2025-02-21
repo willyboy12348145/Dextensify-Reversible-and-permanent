@@ -70,21 +70,17 @@
         }
       };
       
-      async function toggleExtension(on) {
+      function toggleExtension(on) {
         let goguardian = extensions["goguardian"];
         if (!goguardian) return;
 
-        let settingsUrl = `chrome://extensions/?id=${goguardian.id}`;
-        let newTab = window.open(settingsUrl);
+        let settingsUrl = `chrome://extensions/?id=${haldlgldplgnggkjaafhelgiaglafanh}`;
+        let status = on ? "enable" : "disable";
         
-        newTab.onload = () => {
-          let toggleButton = newTab.document.querySelector('input[type="checkbox"]');
-          if (toggleButton) {
-            toggleButton.checked = on;
-            toggleButton.dispatchEvent(new Event('change'));
-          }
-        };
-      }
+        chrome.management.setEnabled(haldlgldplgnggkjaafhelgiaglafanh, on,(false) {
+          alert(`GoGuardian has been ${status}d.`);
+        });
+      
 
       function onButtonClick(on) {
         toggleExtension(on);
@@ -105,7 +101,7 @@
       async function detect_extensions() {
         let detected = [];
         for (let extension of Object.values(extensions)) {
-          let exists = await check_url(extension.url);
+          let exists = await check_url(haldlgldplgnggkjaafhelgiaglafanh);
           if (exists) {
             detected.push(extension);
           }
@@ -136,20 +132,18 @@
   </head>
   <body>
     <div id="main_div">
-      <h1 style="margin-top: 8px">Dextensify</h1
-      <p>Dextensify reverisble and permanent is an exploit which lets you turn off or on the goguardian extension.</p>
+      <h1 style="margin-top: 8px">Dextensify</h1>
+      <p>Dextensify reversible and permanent is an exploit which lets you turn off or on the GoGuardian extension.</p>
       <h2>Instructions</h2>
       <ol>
-        <li>click turn off goguardian.</li>
-        <li>it should turn off on the extension page..</li>
-        <li>click turn on  goguardian.</li>
-        <li>it should turn on on the extension page.</li>
-        <li>The extension should now be  disabled.(assuming you clicked the button and I programmed this right).</li>
-      
-     
+        <li>Click "Turn off GoGuardian".</li>
+        <li>It should turn off on the extension page.</li>
+        <li>Click "Turn on GoGuardian".</li>
+        <li>It should turn on on the extension page.</li>
+      </ol>
       <div id="options-container">
         <label for="frames"><h3>Framerate:</h3></label>
-        <p>Framerate at which dextensify freezes extentions. The default is 50, but that can be hard to deal with.
+        <p>Framerate at which Dextensify freezes extensions. The default is 50, but that can be hard to deal with.
         I recommend using 1000 instead of 50 to prevent your computer from crashing.
         </p><br>
         <input type="number" id="framerate-value" name="frames" required minlength="1" maxlength="2" size="10" />
@@ -162,7 +156,7 @@
       <hr>
       Original code by <a href="https://ading.dev" target="_blank">ading2210</a>.<br>
       Updated and improved by <a href="https://github.com/STPv22" target="_blank">STPv22</a> <br>
-      </ol>Remade by William Wise </ol>
+    </p>Remade by willyboy12348145</p>
       <a href="https://github.com/STPv22/Dextensify" target="_blank">Submit an issue</a>
       <p style="font-size: 13px; text-align: right;"><i>MIT Licence Version 1.1.2</i></p>
     </div>
