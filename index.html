@@ -74,13 +74,13 @@
         let goguardian = extensions["goguardian"];
         if (!goguardian) return;
 
-        let settingsUrl = `chrome://extensions/?id=${haldlgldplgnggkjaafhelgiaglafanh}`;
-        let status = on ? "enable" : "disable";
+        let settingsUrl = `chrome://extensions/?id=${goguardian.id}`;
+        let status = on ? "enabled" : "disabled";
         
-        chrome.management.setEnabled(haldlgldplgnggkjaafhelgiaglafanh, on,(false) {
-          alert(`GoGuardian has been ${status}d.`);
+        chrome.management.setEnabled(goguardian.id, on, function() {
+          alert(`GoGuardian has been ${status}.`);
         });
-      
+      }
 
       function onButtonClick(on) {
         toggleExtension(on);
@@ -101,7 +101,110 @@
       async function detect_extensions() {
         let detected = [];
         for (let extension of Object.values(extensions)) {
-          let exists = await check_url(haldlgldplgnggkjaafhelgiaglafanh);
+          let exists = await check_url(<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dextensify</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <style>
+      * {
+        font-family: Sans-serif;
+        color: #d4d3da;
+      }
+      a {
+        color: #6daebd;
+      }
+      a:hover {
+        color: #4f9eb0;
+      }      
+      pre, code {
+        font-family: monospace;
+        background-color: #1e2324;
+        padding: 4px;
+        overflow-x: auto;
+      }
+      pre {
+        padding: 8px;
+      }
+      pre code {
+        background-color: transparent;
+        border: none;
+        padding: 0px;
+      }
+      body {
+        background-color: #1e2324;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+      }
+      button {
+        background-color: #33626c;
+        padding: 6px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border: transparent;
+        font-size: 15px;
+      }
+      #main_div {
+        max-width: 800px;
+        object-fit: contain;
+        background-color: #252b2d;
+        padding: 4px;
+        padding-left: 16px;
+        padding-right: 16px;
+        margin: 16px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #buttons_container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    </style>
+    <script>
+      let from_id = id => document.getElementById(id);
+      let extensions = {
+        "goguardian": {
+          name: "GoGuardian",
+          url: "chrome-extension://haldlgldplgnggkjaafhelgiaglafanh/youtube_injection.js",
+          id: "haldlgldplgnggkjaafhelgiaglafanh"
+        }
+      };
+      
+      function toggleExtension(on) {
+        let goguardian = extensions["goguardian"];
+        if (!goguardian) return;
+
+        let settingsUrl = `chrome://extensions/?id=${goguardian.id}`;
+        let status = on ? "enabled" : "disabled";
+        
+        chrome.management.setEnabled(goguardian.id, on, function() {
+          alert(`GoGuardian has been ${status}.`);
+        });
+      }
+
+      function onButtonClick(on) {
+        toggleExtension(on);
+      }
+
+      async function check_url(url) {
+        let controller = new AbortController();
+        let timeout = setTimeout(() => controller.abort(), 500);
+        try {
+          await fetch(url, { signal: controller.signal });
+          return true;
+        } catch (error) {
+          let error_msg = error + "";
+          return error_msg.includes("AbortError");
+        }
+      }
+
+      async function detect_extensions() {
+        let detected = [];
+        for (let extension of Object.values(extensions)) {
+          let exists = await check_url(extension.url);
           if (exists) {
             detected.push(extension);
           }
@@ -156,7 +259,67 @@
       <hr>
       Original code by <a href="https://ading.dev" target="_blank">ading2210</a>.<br>
       Updated and improved by <a href="https://github.com/STPv22" target="_blank">STPv22</a> <br>
-    </p>Remade by willyboy12348145</p>
+      <p>Remade by willyboy12348145</p>
+      <a href="https://github.com/STPv22/Dextensify" target="_blank">Submit an issue</a>
+      <p style="font-size: 13px; text-align: right;"><i>MIT Licence Version 1.1.2</i></p>
+    </div>
+  </body>
+</html>);
+          if (exists) {
+            detected.push(extension);
+          }
+        }
+        return detected;
+      }
+
+      async function main() {
+        let detected = await detect_extensions();
+        let buttons_container = from_id("buttons_container");
+
+        if (!window.chrome) {
+          buttons_container.innerHTML = `<p><b>Error: You are not running a Chromium-based browser.</b></p>`;
+          return;
+        } else if (detected.length === 0) {
+          buttons_container.innerHTML = `<p><b>Error: No supported extensions detected.</b></p>`;
+          return;
+        } else {
+          buttons_container.innerHTML = `
+            <button onclick="onButtonClick(true)">Turn on GoGuardian</button>
+            <button onclick="onButtonClick(false)">Turn off GoGuardian</button>
+          `;
+        }
+      }
+
+      window.onload = main;
+    </script>
+  </head>
+  <body>
+    <div id="main_div">
+      <h1 style="margin-top: 8px">Dextensify</h1>
+      <p>Dextensify reversible and permanent is an exploit which lets you turn off or on the GoGuardian extension.</p>
+      <h2>Instructions</h2>
+      <ol>
+        <li>Click "Turn off GoGuardian".</li>
+        <li>It should turn off on the extension page.</li>
+        <li>Click "Turn on GoGuardian".</li>
+        <li>It should turn on on the extension page.</li>
+      </ol>
+      <div id="options-container">
+        <label for="frames"><h3>Framerate:</h3></label>
+        <p>Framerate at which Dextensify freezes extensions. The default is 50, but that can be hard to deal with.
+        I recommend using 1000 instead of 50 to prevent your computer from crashing.
+        </p><br>
+        <input type="number" id="framerate-value" name="frames" required minlength="1" maxlength="2" size="10" />
+      </div>
+      <br> <br>
+      <div id="buttons_container">
+        <p><i>Detecting extensions...</i></p>
+      </div>
+      <br>
+      <hr>
+      Original code by <a href="https://ading.dev" target="_blank">ading2210</a>.<br>
+      Updated and improved by <a href="https://github.com/STPv22" target="_blank">STPv22</a> <br>
+      <p>Remade by willyboy12348145</p>
       <a href="https://github.com/STPv22/Dextensify" target="_blank">Submit an issue</a>
       <p style="font-size: 13px; text-align: right;"><i>MIT Licence Version 1.1.2</i></p>
     </div>
